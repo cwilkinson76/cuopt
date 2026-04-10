@@ -3,7 +3,7 @@
    SPDX-License-Identifier: Apache-2.0
 
 ======================
-gRPC API (reference)
+gRPC API (Reference)
 ======================
 
 The **CuOptRemoteService** gRPC API is defined in Protocol Buffers under the ``cuopt.remote`` package. Source files in the repository:
@@ -11,12 +11,12 @@ The **CuOptRemoteService** gRPC API is defined in Protocol Buffers under the ``c
 * ``cpp/src/grpc/cuopt_remote_service.proto`` — service and job/chunk/log RPCs
 * ``cpp/src/grpc/cuopt_remote.proto`` — LP/MIP problem, settings, and result messages
 
-Most users do **not** call these RPCs directly: the NVIDIA cuOpt **Python** API, **C API**, and **cuopt_cli** submit jobs using solver APIs plus :doc:`environment variables <advanced>`. **Custom** clients call ``CuOptRemoteService`` over gRPC using these definitions. This page summarizes the service for custom integrators and debugging.
+Most users do not call these RPCs directly: the NVIDIA cuOpt **Python** API, **C API**, and **cuopt_cli** submit jobs using solver APIs plus :doc:`environment variables <advanced>`. **Custom** clients call ``CuOptRemoteService`` over gRPC using these definitions. This page summarizes the service for custom integrators and debugging.
 
 Service: ``CuOptRemoteService``
 ================================
 
-Asynchronous jobs
+Asynchronous Jobs
 -----------------
 
 .. list-table::
@@ -38,7 +38,7 @@ Asynchronous jobs
    * - ``WaitForCompletion``
      - Block until the job finishes (status only; use ``GetResult`` for the solution).
 
-Chunked upload (large problems)
+Chunked Upload (Large Problems)
 --------------------------------
 
 .. list-table::
@@ -54,7 +54,7 @@ Chunked upload (large problems)
    * - ``FinishChunkedUpload``
      - Finalize the upload and return ``job_id`` (same as ``SubmitJob``).
 
-Chunked download (large results)
+Chunked Download (Large Results)
 --------------------------------
 
 .. list-table::
@@ -70,7 +70,7 @@ Chunked download (large results)
    * - ``FinishChunkedDownload``
      - End the download session and release server state.
 
-Streaming and callbacks
+Streaming and Callbacks
 -----------------------
 
 .. list-table::
@@ -84,14 +84,14 @@ Streaming and callbacks
    * - ``GetIncumbents``
      - MILP incumbent solutions since a given index.
 
-Messages and constraints
+Messages and Constraints
 ========================
 
-* **Problem types** — LP and MILP in the enum; the problem payload can include quadratic objective data for **QP**-style solves where the client API supports it. **Routing** over this gRPC service is **not** available yet; it is planned for an **upcoming** release (use REST for remote routing today).
+* **Problem types** — LP and MILP in the enum; the problem payload can include quadratic objective data for **QP**-style solves where the client API supports it. **Routing** over this gRPC service is not available yet; it is planned for an upcoming release (use REST for remote routing today).
 * **Solver settings** — Carried as ``PDLPSolverSettings`` or ``MIPSolverSettings`` inside the request or chunked header, aligned with the NVIDIA cuOpt solver options documentation.
 * **Errors** — gRPC status codes carry failures (see comments at the end of ``cuopt_remote_service.proto``).
 
-Further reading
+Further Reading
 ===============
 
 * :doc:`grpc-server-architecture` — Server process model and job lifecycle (overview); :doc:`advanced` for ``cuopt_grpc_server`` flags. Contributor details: ``cpp/docs/grpc-server-architecture.md``.
